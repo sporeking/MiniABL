@@ -16,4 +16,5 @@ vision_config:
 # 智能体策略设置
 agent_config:
   type: "python" # python, prolog
-  name: "test_python_agent" # python/prolog文件名称
+  name: "test_python_agent" # python文件名称
+  

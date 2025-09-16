@@ -12,3 +12,9 @@ class AgentFactory:
             # 获取模块中的类
             MyAgent = getattr(module, 'MyAgent')
             return MyAgent(conf['agent_config'])
+        
+        elif conf['agent_config']['type'] == 'prolog':
+            name = conf['agent_config']['name']
+            module = importlib.import_module(f'.prolog_agent.{name}', package=__package__)
+            MyAgent = getattr(module, 'MyAgent')
+            return MyAgent(conf['agent_config'])
