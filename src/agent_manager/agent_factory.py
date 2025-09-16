@@ -15,6 +15,6 @@ class AgentFactory:
         
         elif conf['agent_config']['type'] == 'prolog':
             name = conf['agent_config']['name']
-            module = importlib.import_module(f'.prolog_agent.{name}', package=__package__)
-            MyAgent = getattr(module, 'MyAgent')
-            return MyAgent(conf['agent_config'])
+            from .prolog_agent.prolog_agent_interface import PrologAgent
+            return PrologAgent(conf['agent_config'])
+            
