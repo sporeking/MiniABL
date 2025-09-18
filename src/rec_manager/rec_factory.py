@@ -1,4 +1,3 @@
-from .rec_interface import RecInterface
 
 class RecFactory:
     @staticmethod
@@ -8,5 +7,5 @@ class RecFactory:
             return VisualRec(conf['vision_config'])
         elif conf['vision_config']['type'] == 'cnn':
             from .cnn_rec.cnn_rec import VisualRec
-            return VisualRec(conf['vision_config']['cnn_config'])
+            return VisualRec(conf)
 

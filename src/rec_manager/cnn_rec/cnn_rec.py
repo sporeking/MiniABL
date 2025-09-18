@@ -1,18 +1,19 @@
 from ..rec_interface import RecInterface
-from .cnn import load_model, train_model
+from .cnn import load_model
 from .dataset_build import MinihackDataset
+from ...utils.device import get_device
 import numpy as np
-import torch
 from PIL import Image
-from torchvision.transforms import ToTensor  # 导入 ToTensor
-device = torch.device("cuda:7" if torch.cuda.is_available() else "cpu")
+from torchvision.transforms import ToTensor
 
 tile_size = (16, 16)
 
 class VisualRec(RecInterface):
     def __init__(self, conf:dict):
         self.conf = conf
-        self.model = load_model(self.conf['num_classes'])
+        device_str = self.conf.get('device', 'auto')
+        self.device = get_device(device_str)
+        self.model = load_model(self.conf['vision_config']['cnn_config']['num_classes'], self.device)
         self.to_tensor = ToTensor()
 
     def recognize(self, obs:np.ndarray) -> np.ndarray:
@@ -26,9 +27,8 @@ class VisualRec(RecInterface):
                 tile = obs[i*tile_size[0]:(i+1)*tile_size[0], j*tile_size[1]:(j+1)*tile_size[1]]
                 # 在使用tile输入模型前进行转换
                 tile = Image.fromarray(tile)
-                tile_tensor = self.to_tensor(tile)  # 转换为Tensor（注意可能需要调整数据类型）
-                tile_tensor = tile_tensor.unsqueeze(0).to(device)  
-                tile_tensor = tile_tensor.to(device)  # 转移到模型所在设备
+                tile_tensor = self.to_tensor(tile)
+                tile_tensor = tile_tensor.unsqueeze(0).to(self.device)
                 tile_rec = self.model(tile_tensor)
                 tile_rec = tile_rec.squeeze(0)
                 tile_rec = tile_rec.argmax(dim=0)

@@ -1,4 +1,3 @@
-from sympy import im
 from ..agent_interface import AgentInterface
 import numpy as np
 

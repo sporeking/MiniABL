@@ -1,3 +1,7 @@
+# 'auto': 自动检测 cuda -> mps -> cpu
+# 'cuda', 'cuda:0', 'cpu', 'mps' 等: 指定设备
+device: "auto"
+
 # ===========================
 # 配置文件
 # ===========================
@@ -17,4 +21,3 @@ vision_config:
 agent_config:
   type: "prolog" # python, prolog
   name: "test_prolog_agent" # python/prolog文件名称(不需要加文件后缀与完整前置文件路径)
-  

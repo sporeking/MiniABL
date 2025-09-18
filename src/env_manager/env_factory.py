@@ -1,4 +1,3 @@
-from .env_interface import EnvInterface
 
 class EnvFactory:
     @staticmethod

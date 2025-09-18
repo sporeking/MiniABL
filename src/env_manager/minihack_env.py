@@ -1,8 +1,5 @@
-from argparse import Action
-from sympy import loggamma
 from .env_interface import EnvInterface
 import gymnasium as gym
-import minihack
 import numpy as np
 from nle import nethack
 from loguru import logger
